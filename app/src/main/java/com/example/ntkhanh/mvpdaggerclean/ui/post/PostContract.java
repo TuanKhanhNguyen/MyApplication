@@ -27,7 +27,7 @@ public interface PostContract {
     }
 
     interface Presenter extends BasePresenter {
-        void loadPost();
+        void loadPost(boolean forceUpdate);
     }
 
 }

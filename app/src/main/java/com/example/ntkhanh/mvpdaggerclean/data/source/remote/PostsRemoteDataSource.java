@@ -38,6 +38,16 @@ public class PostsRemoteDataSource implements PostsDataSource {
 //    }
 
     @Override
+    public void deleteAllPosts() {
+
+    }
+
+    @Override
+    public void savePost(Post post) {
+
+    }
+
+    @Override
     public void getPosts(@NonNull final LoadPostsCallback callback) {
         if (mRetrofit == null) {
             Log.d(TAG, "mRetrofit is null");
@@ -57,7 +67,7 @@ public class PostsRemoteDataSource implements PostsDataSource {
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "getPosts onError = " + e.getMessage());
-                        callback.onDataNotAvaiable();
+                        callback.onDataNotAvailable();
                     }
 
                     @Override

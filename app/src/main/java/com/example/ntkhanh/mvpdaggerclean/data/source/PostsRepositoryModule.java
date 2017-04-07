@@ -1,5 +1,8 @@
 package com.example.ntkhanh.mvpdaggerclean.data.source;
 
+import android.content.Context;
+
+import com.example.ntkhanh.mvpdaggerclean.MyApplication;
 import com.example.ntkhanh.mvpdaggerclean.data.source.local.PostsLocalDataSource;
 import com.example.ntkhanh.mvpdaggerclean.data.source.remote.PostsRemoteDataSource;
 import com.example.ntkhanh.mvpdaggerclean.injection.qualifier.Local;
@@ -16,11 +19,12 @@ import dagger.Provides;
 
 @Module
 public class PostsRepositoryModule {
+
     @Singleton
     @Provides
     @Local
     PostsDataSource providePostLocalDataSource() {
-        return new PostsLocalDataSource();
+        return new PostsLocalDataSource(MyApplication.getInstance());
     }
 
     @Singleton
