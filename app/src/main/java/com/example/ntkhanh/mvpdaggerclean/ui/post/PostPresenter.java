@@ -46,8 +46,8 @@ public class PostPresenter implements PostContract.Presenter {
     }
 
 
-    @Inject
-    Retrofit retrofit;
+//    @Inject
+//    Retrofit retrofit;
     /**
      * Method injection is used here to safely reference {@code this} after the object is created.
      * For more information, see Java Concurrency in Practice.
@@ -61,11 +61,11 @@ public class PostPresenter implements PostContract.Presenter {
     public void start() {
         Log.d(TAG, "start()");
         loadPost(false);
-        if (retrofit == null) {
-            Log.d(TAG, "retrofit  = null" );
-        } else {
-            Log.d(TAG, "retrofit  != null" );
-        }
+//        if (retrofit == null) {
+//            Log.d(TAG, "retrofit  = null" );
+//        } else {
+//            Log.d(TAG, "retrofit  != null" );
+//        }
 
 
     }

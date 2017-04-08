@@ -23,9 +23,10 @@ import com.example.ntkhanh.mvpdaggerclean.data.source.remote.request.PostService
 
 public class PostsRemoteDataSource implements PostsDataSource {
 
-//    public PostsRemoteDataSource() {
-//        MyApplication.getInstance().getApplicationComponent().inject(this);
-//    }
+    // if uses void inject (PostsRemoteDataSource postsRemoteDataSource);
+    public PostsRemoteDataSource() {
+        MyApplication.getInstance().getApplicationComponent().inject(this);
+    }
 
     private static final String TAG = PostsRemoteDataSource.class.getSimpleName();
     @Inject
@@ -52,7 +53,7 @@ public class PostsRemoteDataSource implements PostsDataSource {
         if (mRetrofit == null) {
             Log.d(TAG, "mRetrofit is null");
             //return;
-            mRetrofit = MyApplication.getInstance().getApplicationComponent().getRetrofit();
+            //mRetrofit = MyApplication.getInstance().getApplicationComponent().getRetrofit();
         }
         //MyApplication.getInstance().getApplicationComponent().getRetrofit().create(PostService.class).getPostList().subscribeOn(Schedulers.io())
         mRetrofit.create(PostService.class).getPostList().subscribeOn(Schedulers.io())

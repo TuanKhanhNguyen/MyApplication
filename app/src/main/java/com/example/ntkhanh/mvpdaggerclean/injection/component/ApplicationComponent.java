@@ -9,7 +9,6 @@ import com.example.ntkhanh.mvpdaggerclean.ui.post.PostPresenterModule;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import retrofit2.Retrofit;
 
 /**
  * Created by ntkhanh on 3/26/17.
@@ -20,10 +19,9 @@ import retrofit2.Retrofit;
         modules = {
                 ApplicationModule.class,
                 PostsRepositoryModule.class})
-                //NetModule.class})
 public interface ApplicationComponent {
     PostComponent plus(PostPresenterModule postPresenterModule);
-    Retrofit getRetrofit();
+    //Retrofit getRetrofit();
 
     void inject (PostsRemoteDataSource postsRemoteDataSource); // if want to inject Retrofit to remote data source.
     //Retrofit getRetrofit();
