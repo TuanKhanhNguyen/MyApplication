@@ -8,6 +8,7 @@ import com.example.ntkhanh.mvpdaggerclean.UseCaseHandler;
 import com.example.ntkhanh.mvpdaggerclean.data.model.Post;
 import com.example.ntkhanh.mvpdaggerclean.data.source.PostsRepository;
 import com.example.ntkhanh.mvpdaggerclean.ui.post.domain.GetPosts;
+import com.example.ntkhanh.mvpdaggerclean.util.KNLogger;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class PostPresenter implements PostContract.Presenter {
 
     @Override
     public void start() {
-        Log.d(TAG, "start()");
+        KNLogger.d("start");
         loadPost(false);
 //        if (retrofit == null) {
 //            Log.d(TAG, "retrofit  = null" );
