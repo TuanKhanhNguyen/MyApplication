@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 /**
  * Created by ntkhanh on 3/26/17.
@@ -30,8 +31,8 @@ public class PostsRepositoryModule {
     @Singleton
     @Provides
     @Remote
-    PostsDataSource providePostRemoteDataSource() {
-        return new PostsRemoteDataSource();
+    PostsDataSource providePostRemoteDataSource(Retrofit retrofit) {
+        return new PostsRemoteDataSource(retrofit);
     }
 
 }

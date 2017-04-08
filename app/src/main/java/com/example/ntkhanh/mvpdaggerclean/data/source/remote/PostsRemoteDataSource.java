@@ -15,6 +15,7 @@ import retrofit2.Retrofit;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
 import com.example.ntkhanh.mvpdaggerclean.data.source.remote.request.PostService;
 
 /**
@@ -23,20 +24,15 @@ import com.example.ntkhanh.mvpdaggerclean.data.source.remote.request.PostService
 
 public class PostsRemoteDataSource implements PostsDataSource {
 
-    // if uses void inject (PostsRemoteDataSource postsRemoteDataSource);
-    public PostsRemoteDataSource() {
-        MyApplication.getInstance().getApplicationComponent().inject(this);
-    }
+    private Retrofit mRetrofit;
 
     private static final String TAG = PostsRemoteDataSource.class.getSimpleName();
-    @Inject
-    Retrofit mRetrofit;
 
     // Use inject constructor
-//    @Inject
-//    PostsRemoteDataSource(Retrofit retrofit) {
-//        mRetrofit = retrofit;
-//    }
+    @Inject
+    public PostsRemoteDataSource(Retrofit retrofit) {
+        mRetrofit = retrofit;
+    }
 
     @Override
     public void deleteAllPosts() {
@@ -52,10 +48,9 @@ public class PostsRemoteDataSource implements PostsDataSource {
     public void getPosts(@NonNull final LoadPostsCallback callback) {
         if (mRetrofit == null) {
             Log.d(TAG, "mRetrofit is null");
-            //return;
-            //mRetrofit = MyApplication.getInstance().getApplicationComponent().getRetrofit();
+            callback.onDataNotAvailable();
+            return;
         }
-        //MyApplication.getInstance().getApplicationComponent().getRetrofit().create(PostService.class).getPostList().subscribeOn(Schedulers.io())
         mRetrofit.create(PostService.class).getPostList().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
