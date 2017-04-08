@@ -12,13 +12,13 @@ public class BaseFragment extends Fragment {
     public void showProgressDialog() {
 
         if (isActive() && getActivity() != null) {
-
+            ((BaseActivity) getActivity()).showLoadingDialog();
         }
     }
 
     public void hideProgressDialog() {
         if (isActive() && getActivity() != null) {
-
+            ((BaseActivity) getActivity()).hideLoadingDialog();
         }
     }
 

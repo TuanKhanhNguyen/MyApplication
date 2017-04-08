@@ -1,6 +1,5 @@
 package com.example.ntkhanh.mvpdaggerclean.ui.post;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,9 +9,10 @@ import com.example.ntkhanh.mvpdaggerclean.R;
 
 import javax.inject.Inject;
 
+import com.example.ntkhanh.mvpdaggerclean.ui.base.BaseActivity;
 import com.example.ntkhanh.mvpdaggerclean.util.ActivityUtils;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends BaseActivity {
     private static final String TAG = PostActivity.class.getSimpleName();
 
     @Inject
@@ -33,18 +33,6 @@ public class PostActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mPostFragment, R.id.content_frame);
         }
 
-//        DaggerPostComponent.builder()
-//                .netComponent(((MyApplication) getApplication()).getNetComponent())
-//                .postPresenterModule(new PostPresenterModule(postFragment))
-//                .build()
-//                .inject(this);
-
-//        DaggerApplicationComponent.builder()
-//                .applicationModule(this.getApplication())
-//                .build();
-//        DaggerPostComponent.builder()
-//                .postPresenterModule(new PostPresenterModule(postFragment))
-//                .build();
         MyApplication.getInstance().getApplicationComponent()
                 .plus(new PostPresenterModule(this, mPostFragment))
                 .inject(this);
