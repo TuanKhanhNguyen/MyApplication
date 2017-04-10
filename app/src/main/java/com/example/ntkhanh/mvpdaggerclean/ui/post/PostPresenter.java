@@ -6,7 +6,9 @@ import android.util.Log;
 import com.example.ntkhanh.mvpdaggerclean.UseCase;
 import com.example.ntkhanh.mvpdaggerclean.UseCaseHandler;
 import com.example.ntkhanh.mvpdaggerclean.data.model.Post;
+import com.example.ntkhanh.mvpdaggerclean.data.source.PostsRepository;
 import com.example.ntkhanh.mvpdaggerclean.ui.post.domain.GetPosts;
+import com.example.ntkhanh.mvpdaggerclean.util.KNLogger;
 
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class PostPresenter implements PostContract.Presenter {
     private final PostContract.View mView;
     private final UseCaseHandler mUseCaseHandler;
     private final GetPosts mGetPosts;
+
+    private boolean mFirstLoad = true;
     //private final Retrofit mRetrofit;
 
     @Inject
@@ -43,8 +47,8 @@ public class PostPresenter implements PostContract.Presenter {
     }
 
 
-    @Inject
-    Retrofit retrofit;
+//    @Inject
+//    Retrofit retrofit;
     /**
      * Method injection is used here to safely reference {@code this} after the object is created.
      * For more information, see Java Concurrency in Practice.
@@ -56,22 +60,28 @@ public class PostPresenter implements PostContract.Presenter {
 
     @Override
     public void start() {
-        Log.d(TAG, "start()");
-        loadPost();
-        if (retrofit == null) {
-            Log.d(TAG, "retrofit  = null" );
-        } else {
-            Log.d(TAG, "retrofit  != null" );
-        }
+        KNLogger.d("start");
+        loadPost(false);
+//        if (retrofit == null) {
+//            Log.d(TAG, "retrofit  = null" );
+//        } else {
+//            Log.d(TAG, "retrofit  != null" );
+//        }
 
 
     }
 
+
     @Override
-    public void loadPost() {
+    public void loadPost(boolean forceUpdate) {
+        loadTasks(forceUpdate || mFirstLoad, true);
+        mFirstLoad = false;
+    }
+
+    private void loadTasks(boolean forceUpdate, final boolean showLoadingUI) {
         Log.d(TAG, "oadPost()");
         mView.showProgressDialog();
-        mUseCaseHandler.execute(mGetPosts, new GetPosts.RequestValues(false),
+        mUseCaseHandler.execute(mGetPosts, new GetPosts.RequestValues(forceUpdate),
                 new UseCase.UseCaseCallback<GetPosts.ResponseValue>() {
                     @Override
                     public void onSuccess(GetPosts.ResponseValue response) {

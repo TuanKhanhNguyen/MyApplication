@@ -1,5 +1,8 @@
 package com.example.ntkhanh.mvpdaggerclean.data.source;
 
+import android.content.Context;
+
+import com.example.ntkhanh.mvpdaggerclean.MyApplication;
 import com.example.ntkhanh.mvpdaggerclean.data.source.local.PostsLocalDataSource;
 import com.example.ntkhanh.mvpdaggerclean.data.source.remote.PostsRemoteDataSource;
 import com.example.ntkhanh.mvpdaggerclean.injection.qualifier.Local;
@@ -9,6 +12,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 /**
  * Created by ntkhanh on 3/26/17.
@@ -16,18 +20,19 @@ import dagger.Provides;
 
 @Module
 public class PostsRepositoryModule {
+
     @Singleton
     @Provides
     @Local
     PostsDataSource providePostLocalDataSource() {
-        return new PostsLocalDataSource();
+        return new PostsLocalDataSource(MyApplication.getInstance());
     }
 
     @Singleton
     @Provides
     @Remote
-    PostsDataSource providePostRemoteDataSource() {
-        return new PostsRemoteDataSource();
+    PostsDataSource providePostRemoteDataSource(Retrofit retrofit) {
+        return new PostsRemoteDataSource(retrofit);
     }
 
 }

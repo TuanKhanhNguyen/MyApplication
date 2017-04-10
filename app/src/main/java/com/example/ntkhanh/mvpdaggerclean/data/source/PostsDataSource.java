@@ -14,9 +14,13 @@ import rx.Observable;
 
 public interface PostsDataSource {
 
+    void deleteAllPosts();
+
+    void savePost(Post post);
+
     interface LoadPostsCallback {
         void onPostLoaded(List<Post> postList);
-        void onDataNotAvaiable();
+        void onDataNotAvailable();
     }
 
     void getPosts(@NonNull LoadPostsCallback loadPostsCallback);

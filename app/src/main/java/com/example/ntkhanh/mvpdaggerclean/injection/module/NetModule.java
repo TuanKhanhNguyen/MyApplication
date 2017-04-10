@@ -3,11 +3,13 @@ package com.example.ntkhanh.mvpdaggerclean.injection.module;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.ntkhanh.mvpdaggerclean.BuildConfig;
 import com.example.ntkhanh.mvpdaggerclean.MyApplication;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -24,24 +26,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetModule {
-    private String mBaseUrl;
-    private MyApplication myApplication;
 
-    public NetModule(String baseUrl, MyApplication myApplication) {
-        this.mBaseUrl = baseUrl;
-        this.myApplication =  myApplication;
+    @Inject
+    public NetModule() {
     }
 
     @Provides
     @Singleton
     SharedPreferences providesSharedPreferences(MyApplication application) {
-        return PreferenceManager.getDefaultSharedPreferences(myApplication);
+        return PreferenceManager.getDefaultSharedPreferences(application);
     }
     @Provides
     @Singleton
     Cache provideHttpCache(MyApplication application) {
         int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache(myApplication.getCacheDir(), cacheSize);
+        Cache cache = new Cache(application.getCacheDir(), cacheSize);
         return cache;
     }
 
@@ -67,7 +66,7 @@ public class NetModule {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(mBaseUrl)
+                .baseUrl(BuildConfig.baseURL)
                 .client(okHttpClient)
                 .build();
         return retrofit;

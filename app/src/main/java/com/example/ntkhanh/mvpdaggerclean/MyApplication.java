@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.ntkhanh.mvpdaggerclean.injection.component.ApplicationComponent;
 import com.example.ntkhanh.mvpdaggerclean.injection.component.DaggerApplicationComponent;
 import com.example.ntkhanh.mvpdaggerclean.injection.module.ApplicationModule;
+import com.example.ntkhanh.mvpdaggerclean.util.KNLogger;
 
 
 /**
@@ -20,6 +21,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        if (BuildConfig.DEBUG) {
+            KNLogger.plant(new KNLogger.DebugTree());
+        }
 
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))

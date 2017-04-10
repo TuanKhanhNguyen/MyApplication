@@ -29,6 +29,9 @@ public class GetPosts extends UseCase<GetPosts.RequestValues, GetPosts.ResponseV
 
     @Override
     protected void executeUseCase(RequestValues requestValues) {
+        if (requestValues.isForceUpdate()) {
+            mPostsRepository.refreshPost();
+        }
         Log.d(TAG, "executeUseCase");
         mPostsRepository.getPosts(new PostsDataSource.LoadPostsCallback() {
             @Override
@@ -38,7 +41,7 @@ public class GetPosts extends UseCase<GetPosts.RequestValues, GetPosts.ResponseV
             }
 
             @Override
-            public void onDataNotAvaiable() {
+            public void onDataNotAvailable() {
 
             }
         });
